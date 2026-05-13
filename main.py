@@ -9,6 +9,10 @@ VALID_API_KEY = "super_secret_key_123"
 
 class SumRequest(BaseModel):
     numbers: List[float]
+    def length(this):
+        return len(this.numbers)
+    def pos(this,ind):
+        return this.numbers[ind]
 
 def verify_api_key(x_api_key: str = Header(default=None)):
     if x_api_key != VALID_API_KEY:
@@ -16,6 +20,6 @@ def verify_api_key(x_api_key: str = Header(default=None)):
     return x_api_key
 
 @app.post("/sum")
-def calculate_sum(payload: SumRequest, api_key: str = Depends(verify_api_key)):
-    total = sum(payload.numbers)
+def calculate_sum(payload:SumRequest, api_key: str = Depends(verify_api_key)):
+    total = (payload.length()/2)*(payload.pos(0)+payload.pos(-1))
     return {"total": total}
