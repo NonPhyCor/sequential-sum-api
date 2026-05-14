@@ -13,7 +13,11 @@ class SumRequest(BaseModel):
         return len(this.numbers)
     def pos(this,ind):
         return this.numbers[ind]
-
+    def add(this):
+        s=0
+        for i in range(len(this.numbers)):
+            s+=this.numbers[i]
+        return s
 def verify_api_key(x_api_key: str = Header(default=None)):
     if x_api_key != VALID_API_KEY:
         raise HTTPException(status_code=401, detail="Invalid or missing API Key")
@@ -21,5 +25,4 @@ def verify_api_key(x_api_key: str = Header(default=None)):
 
 @app.post("/sum")
 def calculate_sum(payload:SumRequest, api_key: str = Depends(verify_api_key)):
-    total = (payload.length()/2)*(payload.pos(0)+payload.pos(-1))
-    return {"total": total}
+    return payload.add()
