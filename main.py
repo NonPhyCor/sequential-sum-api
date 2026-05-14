@@ -9,10 +9,6 @@ VALID_API_KEY = "super_secret_key_123"
 
 class SumRequest(BaseModel):
     numbers: List[float]
-    def length(this):
-        return len(this.numbers)
-    def pos(this,ind):
-        return this.numbers[ind]
     def add(this):
         s=0
         for i in range(len(this.numbers)):
